@@ -1,27 +1,26 @@
-<%= form_with(model: poll, local: true) do |form| %>
-  <% if poll.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(poll.errors.count, "error") %> prohibited this poll from being saved:</h2>
-
-      <ul>
-      <% poll.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+ <%= form_with(model: poll, remote: true, format: :json, id: 'add_poll') do |form| %>
+      <% if poll.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(poll.errors.count, "error") %> prohibited this poll from being saved:</h2>
+          <ul>
+          <% poll.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
       <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name, id: :poll_name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :laptop %>
-    <%= form.text_field :laptop, id: :poll_laptop %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+      <div class="field">
+        <%= form.label :name %>
+        <%= form.text_field :name, id: :poll_name, class: "form-control" %>
+      </div>
+      <div class="field">
+        <%= form.label :laptop, "Do you own a laptop? " %><br />
+        <%= form.label :laptop, "Yes", :value => "true" %>
+        <%= form.radio_button :laptop, 'yes', :checked => true %>
+        <%= form.label :laptop, "No", :value => "false" %>
+        <%= form.radio_button :laptop, 'no'%>
+      </div>
+      <div class="actions">
+        <%= form.submit 'submit', class: "btn btn-success"%>
+      </div>
+    <% end %>

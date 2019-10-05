@@ -1,29 +1,39 @@
-<p id="notice"><%= notice %></p>
+<div class="container-fluid">
+      <div class="row">
+        <div class="col-5 offset-1">
+          <p id="notice"><%= notice %></p>
+          <h1>Polls</h1>
+          <table id='poll-table' class="table table-hover">
+            <thead class="thead-light">
+              <tr>
+                <th>Name</th>
+                <th>Laptop</th>
+                <th colspan="3"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @polls.each do |poll| %>
+                <tr>
+                  <td><%= poll.name %></td>
+                  <td><%= poll.laptop %></td>
+                  <td><%= link_to 'Show', poll %></td>
+                  <td><%= link_to 'Edit', edit_poll_path(poll) %></td>
+                  <td><%= link_to 'Destroy', poll, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
 
-<h1>Polls</h1>
+        <div class="col-6">
+          <%= pie_chart [["Yes", Poll.where(laptop: "yes").count], ["No", Poll.where(laptop: "no").count]], id:'polls'%> 
+        </div>
+      </div>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Laptop</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @polls.each do |poll| %>
-      <tr>
-        <td><%= poll.name %></td>
-        <td><%= poll.laptop %></td>
-        <td><%= link_to 'Show', poll %></td>
-        <td><%= link_to 'Edit', edit_poll_path(poll) %></td>
-        <td><%= link_to 'Destroy', poll, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Poll', new_poll_path %>
+       <div class="row">
+        <div class='col-11 offset-1 col-sm-4'>
+          <h3>New poll</h3>
+          <%= render 'form', poll: @poll %>
+        </div>
+      </div>
+    </div>
